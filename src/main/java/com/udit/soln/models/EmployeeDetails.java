@@ -1,6 +1,7 @@
 package com.udit.soln.models;
 
 import java.util.List;
+import java.util.Map;
 
 public class EmployeeDetails {
 
@@ -8,7 +9,6 @@ public class EmployeeDetails {
     String name;
     Double salary;
     Double salaryDiff;
-    private List<EmployeeNode> subordinates;
 
     public EmployeeDetails(Integer id, String name, Double salary) {
         this.id = id;
@@ -48,11 +48,4 @@ public class EmployeeDetails {
         this.salaryDiff = salaryDiff;
     }
 
-    public List<EmployeeNode> getSubordinates() {
-        return subordinates;
-    }
-
-    public void setSubordinates(List<EmployeeNode> subordinates) {
-        this.subordinates = subordinates;
-    }
 }

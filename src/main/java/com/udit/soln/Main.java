@@ -1,18 +1,20 @@
 package com.udit.soln;
 
 import com.udit.soln.service.CsvParserService;
-import com.udit.soln.service.EmployeeBinaryTree;
+import com.udit.soln.service.EmployeeAnalyticsService;
 import com.udit.soln.service.ManagerAnalyticsService;
 
 public class Main {
-    public static void main(String[] args) {
 
-        EmployeeBinaryTree employeeTree = new EmployeeBinaryTree();
+    // keep runtime memory low by not storing the csv file in memory
+    public static void main(String[] args) {
+        EmployeeAnalyticsService employeeAnalyticsService = new EmployeeAnalyticsService();
         ManagerAnalyticsService managerAnalyticsService = new ManagerAnalyticsService();
 
+        // We read csv file one line at a time and build collections to hold the info we require
         CsvParserService csvParser = new CsvParserService();
 
-        csvParser.parseCsvFile("employees.csv", employeeTree);
+        csvParser.parseCsvFile("employees.csv");
 
         managerAnalyticsService.findManagerWithAnomaly(
                 csvParser.getEmployeeDetails(),
@@ -20,7 +22,8 @@ public class Main {
                 csvParser.getSubordinatesSalariesSum()
         );
 
-        // Find employee with more than 4 managers
-        employeeTree.findEmployeesWithMoreThanNManagers(2);
+        // We read csv file one line at a time and build collections to hold the info we require
+        // this keeps memory foot-print low
+        employeeAnalyticsService.findEmployeesWithLongReporting(4);
     }
 }

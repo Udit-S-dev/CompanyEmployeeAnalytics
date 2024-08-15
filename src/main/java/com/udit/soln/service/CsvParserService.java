@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class CsvParserService {
 
@@ -18,7 +17,7 @@ public class CsvParserService {
     Map<Integer, Double> subordinatesSalariesSum = new HashMap<>();
     Map<Integer, Integer> subordinatesCount = new HashMap<>();
 
-    public void parseCsvFile(String fileName, EmployeeBinaryTree employeeTree ) {
+    public void parseCsvFile(String fileName ) {
         String csvFile = CsvParserService.class.getClassLoader().getResource(fileName).getPath(); // Path to your CSV file
         String line;
         String cvsSplitBy = ",";
@@ -37,14 +36,9 @@ public class CsvParserService {
                 Double salary = Double.parseDouble(data[3]);
                 // for ceo no manager
                 Integer managerId = data.length > 4 ? Integer.parseInt(data[4]) : 0;
-
-                employeeTree.insert(id, firstName+" "+lastName, managerId);
                 // If the employee has a manager, update the manager's subordinates' data
-                if (Objects.nonNull(managerId) ) {
-                    subordinatesSalariesSum.merge(managerId, salary, Double::sum);
-                    subordinatesCount.merge(managerId, 1, Integer::sum);
-                }
-                // Track the manager's salary
+                subordinatesSalariesSum.merge(managerId, salary, Double::sum);
+                subordinatesCount.merge(managerId, 1, Integer::sum);
                 employeeDetails.put(id, new EmployeeDetails(id, firstName+" "+lastName,salary));
             }
         } catch (IOException e) {
